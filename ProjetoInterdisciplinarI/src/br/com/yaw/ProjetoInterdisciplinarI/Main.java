@@ -1,5 +1,6 @@
 package br.com.yaw.ProjetoInterdisciplinarI;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 import javax.naming.LimitExceededException;
@@ -8,19 +9,34 @@ public class Main {
 	
 	//TODO: Preciso verificar se vai ficar desta forma ainda.
 	public static int limiteLugares = 25;
-	public static int[] matrizCorredor = new int[limiteLugares];
-	public static int[] matrizJanela = new int[limiteLugares];
+	public static Integer[] matrizCorredor = new Integer[limiteLugares];
+	public static Integer[] matrizJanela = new Integer[limiteLugares];
 
 	public static void main(String[] args) {
 		
+		//Utilizo o Try/Cath/Finally 
+		try {
+			Arrays.fill(matrizCorredor, 0);
+			Arrays.fill(matrizJanela, 0);
+			IniciaPrograma();
+		}  
+		catch (Exception ex) {
+			System.out.println("Ocorreu um problema: ");
+			ex.printStackTrace();
+		}  
+		finally {
+		}				
+	}
+	
+	public static void IniciaPrograma()
+	{
 		//Criação das variaveis utilizadas no sistema
 		Scanner scaMenu = new Scanner(System.in);
 		int opcaoMenu = 0;
 		Boolean dadoCorreto = false;
 		
-		//Utilizo o Try/Cath/Finally 
-		try {
-			
+		try	
+		{
 			ExibeMenu();
 			
 			while (!dadoCorreto) {
@@ -50,20 +66,15 @@ public class Main {
 					System.out.println("Por favor escolha uma opção válida");
 					ExibeMenu();
 				}
-	            
 			}
-		}  
-		catch (Exception ex) {
-			System.out.println("Ocorreu um problema: ");
-			ex.printStackTrace();
-		}  
+		}
 		finally {
 			if (scaMenu != null)
 			{
 				scaMenu.close();
 				scaMenu = null;
 			}
-		}				
+		}
 	}
 	
 	//TODO: Documentar o método
@@ -77,46 +88,58 @@ public class Main {
 	public static void Opcao1()
 	{
 		//TODO: Preciso analisar se tem alguma matriz disponivel
-		Scanner leia2 = new Scanner(System.in);
-		int poltrona;
-		String opcao;
-		
-		System.out.println("Escolha uma poltrona de 1 a " + limiteLugares);
-		
-		if (leia2.hasNextInt()) { //&& (leia2.nextInt()  > 0 && leia2.nextInt() <= limiteLugares)) {
-			poltrona = leia2.nextInt();
+		if (Arrays.asList(matrizCorredor).contains(0) || Arrays.asList(matrizJanela).contains(0))
+		{
+			Scanner leia2 = new Scanner(System.in);
+			int poltrona;
+			String opcao;
+			Boolean validaDados = false;
 			
-			//TODO: Desenvolver o else
-			if (poltrona > 0 && poltrona <= limiteLugares)
-			{
-				System.out.println("Escolha janela (J) ou corredor (C)");
-				leia2 = new Scanner(System.in);
-				opcao = leia2.next().toLowerCase();
-				poltrona = poltrona - 1;
+			System.out.println("Escolha uma poltrona de 1 a " + limiteLugares);
+			
+			if (leia2.hasNextInt()) {
+				poltrona = leia2.nextInt();
 				
-				//TODO: Desenvolver o else
-				if (opcao.equals("j"))
+				if (poltrona > 0 && poltrona <= limiteLugares)
 				{
-					//TODO: Desenvolver o else
-					if (!PoltronaOcupada(matrizJanela, poltrona))
+					System.out.println("Escolha janela (J) ou corredor (C)");
+					leia2 = new Scanner(System.in);
+					opcao = leia2.next().toLowerCase();
+					poltrona = poltrona - 1;
+					
+					if (opcao.equals("j"))
 					{
-						matrizJanela[poltrona] = 1;
-						System.out.println("Venda Efetivada");
-					}
-				} else if (opcao.equals("c"))
-				{
-					//TODO: Desenvolver o else
-					if (!PoltronaOcupada(matrizCorredor, poltrona))
+						if (!PoltronaOcupada(matrizJanela, poltrona))
+						{
+							matrizJanela[poltrona] = 1;
+							System.out.println("Venda Efetivada");
+							validaDados = true;
+						}
+					} else if (opcao.equals("c"))
 					{
-						matrizCorredor[poltrona] = 1;
-						System.out.println("Venda Efetivada");
+						if (!PoltronaOcupada(matrizCorredor, poltrona))
+						{
+							matrizCorredor[poltrona] = 1;
+							System.out.println("Venda Efetivada");
+							validaDados = true;
+						}
 					}
 				}
 			}
+			
+			//TODO: Verificar se desta forma esta coerente
+			if (!validaDados)
+			{
+				Opcao1();
+			} else {
+				IniciaPrograma();
+			}
+		} else {
+			System.out.println("LOTADO");
 		}
 	}
 	
-	public static boolean PoltronaOcupada(int[] matriz, int lugar)
+	public static boolean PoltronaOcupada(Integer[] matriz, int lugar)
 	{
 		return (matriz[lugar] == 1)? true : false;
 	}
