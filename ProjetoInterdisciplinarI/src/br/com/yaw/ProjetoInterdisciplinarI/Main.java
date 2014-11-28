@@ -57,7 +57,7 @@ public class Main {
 						Opcao1();
 					} else if (opcaoMenu == 2)
 					{
-						
+						Opcao2();
 					} else if (opcaoMenu == 3)
 					{
 						
@@ -87,7 +87,6 @@ public class Main {
 	//TODO: Documentar o método, nome esta estranho
 	public static void Opcao1()
 	{
-		//TODO: Preciso analisar se tem alguma matriz disponivel
 		if (Arrays.asList(matrizCorredor).contains(0) || Arrays.asList(matrizJanela).contains(0))
 		{
 			Scanner leia2 = new Scanner(System.in);
@@ -139,11 +138,34 @@ public class Main {
 		}
 	}
 	
+	//TODO: Documentar o método
+	public static void Opcao2()
+	{
+		System.out.printf("%1s  %-7s   %-7s%n", "Poltrona",  "Janela", "Corredor");
+		
+		for (int i = 0; i < limiteLugares; i++)
+		{
+			System.out.printf("%5s  %9s   %7s%n",
+							   (i + 1),
+							   DetalhesPoltrona(matrizJanela, i),
+							   DetalhesPoltrona(matrizCorredor, i)
+							 );
+		}
+		
+		System.out.println("\n");
+		System.out.println("Poltronas Ocupadas: ");
+		System.out.println("Poltronas Livres: ");
+		IniciaPrograma();
+	}
+	
+	//TODO: Documentar o método
 	public static boolean PoltronaOcupada(Integer[] matriz, int lugar)
 	{
 		return (matriz[lugar] == 1)? true : false;
 	}
 	
-	
-	
+	public static String DetalhesPoltrona(Integer[] matriz, int lugar)
+	{
+		return (PoltronaOcupada(matriz, lugar))? "Ocupada" : "Livre";
+	}
 }
