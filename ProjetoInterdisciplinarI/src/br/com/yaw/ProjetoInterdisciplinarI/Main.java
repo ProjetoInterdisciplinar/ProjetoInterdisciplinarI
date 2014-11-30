@@ -142,6 +142,8 @@ public class Main {
 	public static void Opcao2()
 	{
 		System.out.printf("%1s  %-7s   %-7s%n", "Poltrona",  "Janela", "Corredor");
+		int poltronasOcupadas = 0;
+		int poltronasLivres = 0;
 		
 		for (int i = 0; i < limiteLugares; i++)
 		{
@@ -150,12 +152,29 @@ public class Main {
 							   DetalhesPoltrona(matrizJanela, i),
 							   DetalhesPoltrona(matrizCorredor, i)
 							 );
+			
+			if (matrizCorredor[i] == 1)
+				poltronasOcupadas++;
+			else
+				poltronasLivres++;
+			
+			if (matrizJanela[i] == 1)
+				poltronasOcupadas++;
+			else
+				poltronasLivres++;
 		}
 		
 		System.out.println("\n");
-		System.out.println("Poltronas Ocupadas: ");
-		System.out.println("Poltronas Livres: ");
+		System.out.println("Poltronas Ocupadas: " + poltronasOcupadas);
+		System.out.println("Poltronas Livres: " + poltronasLivres);
+		System.out.println("\n");
 		IniciaPrograma();
+	}
+	
+	//TODO: Documentar o método
+	public static void Opcao3()
+	{
+		System.exit(0);
 	}
 	
 	//TODO: Documentar o método
@@ -164,6 +183,7 @@ public class Main {
 		return (matriz[lugar] == 1)? true : false;
 	}
 	
+	//TODO: Documentar o método
 	public static String DetalhesPoltrona(Integer[] matriz, int lugar)
 	{
 		return (PoltronaOcupada(matriz, lugar))? "Ocupada" : "Livre";
