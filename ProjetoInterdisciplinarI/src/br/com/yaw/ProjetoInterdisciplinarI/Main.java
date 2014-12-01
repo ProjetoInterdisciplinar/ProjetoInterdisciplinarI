@@ -107,6 +107,7 @@ public class Main {
 				int poltrona;
 				String opcao;
 				Boolean validaDados = false;
+				Boolean poltronaOcupada = false;
 				
 				System.out.println("Escolha uma poltrona de 1 a " + limiteLugares);
 				
@@ -126,22 +127,34 @@ public class Main {
 							{
 								matrizJanela[poltrona] = 1;
 								System.out.println("Venda Efetivada");
-								validaDados = true;
+								poltronaOcupada = false;
+							} else {
+								poltronaOcupada = true;
 							}
+							validaDados = true;
 						} else if (opcao.equals("c"))
 						{
 							if (!PoltronaOcupada(matrizCorredor, poltrona))
 							{
 								matrizCorredor[poltrona] = 1;
 								System.out.println("Venda Efetivada");
-								validaDados = true;
+								poltronaOcupada = false;
+							} else {
+								poltronaOcupada = true;
 							}
+							validaDados = true;
 						}
 					}
 				}
 				
-				if (!validaDados)
+				if (!validaDados || poltronaOcupada)
 				{
+					if (!validaDados)
+						System.out.println("Insira uma opção válida!");
+					
+					if (poltronaOcupada)
+						System.out.println("Poltrona ocupada!");					
+					
 					Opcao1();
 				} else {
 					IniciaPrograma();
