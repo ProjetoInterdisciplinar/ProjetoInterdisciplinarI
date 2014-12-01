@@ -3,8 +3,6 @@ package br.com.yaw.ProjetoInterdisciplinarI;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import javax.naming.LimitExceededException;
-
 public class Main {
 	
 	//Criação das variaveis globais para ser utilizadas em todos os métodos
